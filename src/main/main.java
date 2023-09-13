@@ -5,6 +5,7 @@
 package main;
 
 import Controller.ControladorMonitor;
+import Controller.ControladorPrincipal;
 
 /**
  *
@@ -13,7 +14,8 @@ import Controller.ControladorMonitor;
 public class main {
     
     public static void main(String[] args){
-        ControladorMonitor cm = new ControladorMonitor();
+        ControladorPrincipal maincont = new ControladorPrincipal();
+        maincont.initPrincipal();
     }
     
 }

@@ -5,6 +5,7 @@
 package View;
 
 import com.toedter.calendar.JCalendar;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -25,6 +26,27 @@ public class Registro extends javax.swing.JFrame {
     
     public void initView(){
         this.setVisible(true);
+    }
+    
+    public void closeView(){
+        this.setVisible(false);
+    }
+    
+    public void clearView(){
+        this.nameField.setText("");
+        this.addressField.setText("");
+        this.emailField.setText("");
+        this.phoneField.setText("");
+    }
+    
+    public void setActionsCommands(){
+        this.returnButton.setActionCommand("returnreg");
+        this.registerButton.setActionCommand("register");
+    }
+    
+    public void addListeners(ActionListener objeto){
+        this.returnButton.addActionListener(objeto);
+        this.registerButton.addActionListener(objeto);
     }
 
     public JTextField getAddressField() {
@@ -68,11 +90,11 @@ public class Registro extends javax.swing.JFrame {
     }
 
     public JButton getRegisterButton() {
-        return registerButton;
+        return returnButton;
     }
 
     public void setRegisterButton(JButton registerButton) {
-        this.registerButton = registerButton;
+        this.returnButton = registerButton;
     }
 
     public JLabel getUserLabel() {
@@ -95,7 +117,7 @@ public class Registro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        registerButton = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         userLabel = new javax.swing.JLabel();
@@ -107,13 +129,14 @@ public class Registro extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         dateField = new com.toedter.calendar.JCalendar();
+        registerButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        registerButton.setText("REGISTRARSE");
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
+        returnButton.setText("VOLVER");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
+                returnButtonActionPerformed(evt);
             }
         });
 
@@ -155,6 +178,13 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        registerButton.setText("REGISTRARSE");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,10 +210,6 @@ public class Registro extends javax.swing.JFrame {
                         .addContainerGap())))
             .addComponent(userLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(238, 238, 238)
-                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(202, 202, 202)
@@ -192,6 +218,12 @@ public class Registro extends javax.swing.JFrame {
                         .addGap(214, 214, 214)
                         .addComponent(jLabel4)))
                 .addContainerGap(204, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(123, 123, 123)
+                .addComponent(returnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67)
+                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,17 +250,19 @@ public class Registro extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(returnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_registerButtonActionPerformed
+    }//GEN-LAST:event_returnButtonActionPerformed
 
     private void phoneFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneFieldActionPerformed
         // TODO add your handling code here:
@@ -245,6 +279,10 @@ public class Registro extends javax.swing.JFrame {
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +331,7 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JTextField nameField;
     private javax.swing.JFormattedTextField phoneField;
     private javax.swing.JButton registerButton;
+    private javax.swing.JButton returnButton;
     private javax.swing.JLabel userLabel;
     // End of variables declaration//GEN-END:variables
 }
