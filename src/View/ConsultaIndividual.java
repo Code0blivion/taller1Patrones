@@ -4,6 +4,7 @@
  */
 package View;
 
+import Model.Usuario;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 
@@ -27,6 +28,7 @@ public class ConsultaIndividual extends javax.swing.JFrame {
     public void closeView() {
         this.setVisible(false);
     }
+    
     
     public void setActionsCommands() {
         this.returnButton.setActionCommand("returncons");
@@ -55,7 +57,6 @@ public class ConsultaIndividual extends javax.swing.JFrame {
     public JLabel getPhoneLabel() {
         return phoneLabel;
     }
-    
     
 
     /**

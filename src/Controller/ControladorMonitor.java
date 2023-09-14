@@ -155,7 +155,17 @@ public class ControladorMonitor implements ActionListener {
                     }
                 } else if (response.startsWith("consult")) {
                     pk = Integer.parseInt(response.replace("consult", ""));
-                    //Falta por hacer...
+                    //Cargar el registro de la base de datos con la pk
+                    //Linea de prueba
+                    Monitor test = new Monitor(1, "Luis", "3215785454", "03/11/2000", "Cra 34 # 98-89", "luis@gmail.com");
+                    //
+                    
+                    interfazConsulta.getNameLabel().setText(test.getNombre());
+                    interfazConsulta.getAddressLabel().setText(test.getDireccion());
+                    interfazConsulta.getPhoneLabel().setText(test.getTelefono());
+                    interfazConsulta.getMailLabel().setText(test.getCorreo());
+                    interfazConsulta.getDateLabel().setText(test.getFecha_nacimiento());
+                    initConsulta();
                 }
 
         }

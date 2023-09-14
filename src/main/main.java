@@ -6,6 +6,7 @@ package main;
 
 import Controller.ControladorMonitor;
 import Controller.ControladorPrincipal;
+import Model.Conexion;
 
 /**
  *
@@ -16,6 +17,10 @@ public class main {
     public static void main(String[] args){
         ControladorPrincipal maincont = new ControladorPrincipal();
         maincont.initPrincipal();
+        
+        Conexion con = new Conexion();
+        con.getConexion();
+        
     }
     
 }
