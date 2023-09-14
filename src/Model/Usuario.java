@@ -12,18 +12,29 @@ import java.util.Objects;
  */
 public class Usuario {
     
+    private int pk;
     private String nombre;
     private String telefono;
     private String fecha_nacimiento;
     private String direccion;
     private String correo;
+    
 
-    public Usuario(String nombre, String telefono, String fecha_nacimiento, String direccion, String correo) {
+    public Usuario(int pk, String nombre, String telefono, String fecha_nacimiento, String direccion, String correo) {
+        this.pk = pk;
         this.nombre = nombre;
         this.telefono = telefono;
         this.fecha_nacimiento = fecha_nacimiento;
         this.direccion = direccion;
         this.correo = correo;
+    }
+
+    public int getPk() {
+        return pk;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
     }
 
     public String getNombre() {

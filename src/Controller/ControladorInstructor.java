@@ -5,7 +5,7 @@
 package Controller;
 
 import Model.Instructor;
-import View.Consulta;
+import View.GestionUsuario;
 import View.Modificacion;
 import View.Registro;
 import java.awt.event.ActionEvent;
@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 public class ControladorInstructor implements ActionListener{
     
     private Registro interfazRegistro = new Registro();
-    private Consulta interfazConsulta = new Consulta();
+    private GestionUsuario interfazConsulta = new GestionUsuario();
     private Modificacion interfazModificacion = new Modificacion();
     private ControladorPrincipal principal;
     
@@ -64,7 +64,7 @@ public class ControladorInstructor implements ActionListener{
                 DateFormat dateformat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
                 String date = dateformat.format(interfazRegistro.getDateField().getDate());
                 
-                Instructor instructor = new Instructor(nombre, phone, date, direccion, email);
+                Instructor instructor = new Instructor(1, nombre, phone, date, direccion, email);
                 
                 System.out.println("Nombre: " + instructor.getNombre() + "Fecha: "+instructor.getFecha_nacimiento() );
                 //Falta validar y guardar en base de datos...
@@ -82,7 +82,7 @@ public class ControladorInstructor implements ActionListener{
              
             case "update":
                 //Inicialmente se carga el registro de la base de datos como un objeto...
-                Instructor test = new Instructor("Luis", "3215785454", "03/11/2000", "Cra 34 # 98-89", "luis@gmail.com");
+                Instructor test = new Instructor(1,"Luis", "3215785454", "03/11/2000", "Cra 34 # 98-89", "luis@gmail.com");
                 interfazModificacion.getNameField().setText(test.getNombre());
                 interfazModificacion.getAddressField().setText(test.getDireccion());
                 interfazModificacion.getEmailField().setText(test.getCorreo());

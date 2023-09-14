@@ -4,17 +4,33 @@
  */
 package View;
 
+import Model.Usuario;
+import java.awt.Color;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Estudiantes
  */
-public class Consulta extends javax.swing.JFrame {
+public class GestionUsuario extends javax.swing.JFrame {
 
     /**
      * Creates new form Consulta
      */
-    public Consulta() {
+    public GestionUsuario() {
         initComponents();
+        panel = new JPanel();
+        panel.setBackground(Color.blue);
+        panel.setSize(600, 350);
+        panel.setLocation(40, 80);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        //this.add(new JScrollPane(panel));
+        this.add(panel);     
+        panel.repaint();
+        panel.revalidate();
     }
     
     public void initView(){
@@ -23,6 +39,32 @@ public class Consulta extends javax.swing.JFrame {
     
     public void setActionsCommands(){
         this.returnButton.setActionCommand("return");
+    }
+    
+    
+    public void showRegisters(Usuario[] usuarios){
+        
+        for(int i = 0; i<usuarios.length; i++){
+            JPanel mipanel = new JPanel();
+            mipanel.setBackground(Color.LIGHT_GRAY);
+            mipanel.setSize(Short.MAX_VALUE, 50);
+            JLabel etiqueta = new JLabel(usuarios[i].getNombre());
+            mipanel.add(etiqueta);
+            JButton consultbutton = new JButton();
+            consultbutton.setText("Consultar Info");
+            consultbutton.setActionCommand("consult");
+            mipanel.add(consultbutton);
+            JButton modifybutton = new JButton();
+            modifybutton.setText("Modificar Info");
+            modifybutton.setActionCommand("modify");
+            mipanel.add(modifybutton);
+            JButton deletebutton = new JButton();
+            deletebutton.setText("ELIMINAR");
+            mipanel.add(deletebutton);
+            deletebutton.setActionCommand("delete");
+            panel.add(mipanel);
+        }
+             
     }
 
     /**
@@ -64,9 +106,9 @@ public class Consulta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
+                .addGap(416, 416, 416)
                 .addComponent(returnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         pack();
@@ -93,20 +135,29 @@ public class Consulta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Consulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Consulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Consulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Consulta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GestionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Consulta().setVisible(true);
+                
+                //Codigo de prueba
+                Usuario [] usuarios = new Usuario[20];
+                for(int i = 0; i<usuarios.length; i++){
+                    usuarios[i] = new Usuario(i,"User"+i,"13213131"+i,"03/10/2000"+i,"csrwer 34"+i,"erlewr@rer.com"+i);
+                }
+                GestionUsuario cons = new GestionUsuario();
+                cons.showRegisters(usuarios);
+                cons.setVisible(true);
             }
         });
     }
@@ -115,4 +166,5 @@ public class Consulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton returnButton;
     // End of variables declaration//GEN-END:variables
+    private JPanel panel;
 }

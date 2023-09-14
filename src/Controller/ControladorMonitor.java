@@ -6,7 +6,7 @@ package Controller;
 import Model.Instructor;
 import Model.Monitor;
 import View.Registro;
-import View.Consulta;
+import View.GestionUsuario;
 import View.Modificacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +20,7 @@ import java.util.Locale;
 public class ControladorMonitor implements ActionListener{
     
     private Registro interfazRegistro = new Registro();
-    private Consulta interfazConsulta = new Consulta();
+    private GestionUsuario interfazConsulta = new GestionUsuario();
     private Modificacion interfazModificacion = new Modificacion();
     private ControladorPrincipal principal;
     
@@ -54,7 +54,7 @@ public class ControladorMonitor implements ActionListener{
                 DateFormat dateformat = DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault());
                 String date = dateformat.format(interfazRegistro.getDateField().getDate());
                 
-                Monitor monitor = new Monitor(nombre, phone, date, direccion, email);
+                Monitor monitor = new Monitor(1,nombre, phone, date, direccion, email);
                 
                 System.out.println("Nombre: " + monitor.getNombre() + "Fecha: "+monitor.getFecha_nacimiento() );
                 //Falta validar y guardar en base de datos...

@@ -10,8 +10,8 @@ package Model;
  */
 public class Instructor extends Usuario{
 
-    public Instructor(String nombre, String telefono, String fecha_nacimiento, String direccion, String correo) {
-        super(nombre, telefono, fecha_nacimiento, direccion, correo);
+    public Instructor(int pk, String nombre, String telefono, String fecha_nacimiento, String direccion, String correo) {
+        super(pk, nombre, telefono, fecha_nacimiento, direccion, correo);
     }
     
 }
