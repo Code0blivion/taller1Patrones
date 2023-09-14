@@ -24,7 +24,7 @@ public class Conexion {
     
     public Connection getConexion(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
             JOptionPane.showMessageDialog(null, "conectado");
         }catch (SQLException e){
