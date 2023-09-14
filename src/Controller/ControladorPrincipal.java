@@ -37,9 +37,12 @@ public class ControladorPrincipal implements ActionListener{
                 controladorins.initRegister();
             break;
             
-            //Codigo de prueba. Modificar luego
-            case "consultins":
-                controladorins.initModification();
+            case "gestionins":
+                controladorins.initGestion();
+            break;
+            
+            case "gestionmon":
+                controladormon.initGestion();
             break;
         }
         ventana.closeView();

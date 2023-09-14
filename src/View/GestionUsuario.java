@@ -6,6 +6,7 @@ package View;
 
 import Model.Usuario;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,21 +30,34 @@ public class GestionUsuario extends javax.swing.JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         //this.add(new JScrollPane(panel));
         this.add(panel);     
-        panel.repaint();
-        panel.revalidate();
+        refreshView();
     }
     
     public void initView(){
         this.setVisible(true);
     }
     
+    public void closeView() {
+        this.setVisible(false);
+    }
+    
+    public void refreshView(){
+        panel.repaint();
+        panel.revalidate();
+        pack();
+    }
+    
     public void setActionsCommands(){
-        this.returnButton.setActionCommand("return");
+        this.returnButton.setActionCommand("returnges");
+    }
+    
+    public void addListeners(ActionListener objeto){
+        this.returnButton.addActionListener(objeto);
     }
     
     
-    public void showRegisters(Usuario[] usuarios){
-        
+    public void showRegisters(Usuario[] usuarios, ActionListener objeto){
+        panel.removeAll();
         for(int i = 0; i<usuarios.length; i++){
             JPanel mipanel = new JPanel();
             mipanel.setBackground(Color.LIGHT_GRAY);
@@ -52,18 +66,23 @@ public class GestionUsuario extends javax.swing.JFrame {
             mipanel.add(etiqueta);
             JButton consultbutton = new JButton();
             consultbutton.setText("Consultar Info");
-            consultbutton.setActionCommand("consult");
+            consultbutton.setActionCommand("consult"+i);
+            consultbutton.addActionListener(objeto);
             mipanel.add(consultbutton);
             JButton modifybutton = new JButton();
             modifybutton.setText("Modificar Info");
-            modifybutton.setActionCommand("modify");
+            modifybutton.setActionCommand("modify"+i);
+            modifybutton.addActionListener(objeto);
             mipanel.add(modifybutton);
             JButton deletebutton = new JButton();
             deletebutton.setText("ELIMINAR");
-            mipanel.add(deletebutton);
-            deletebutton.setActionCommand("delete");
+            deletebutton.setActionCommand("delete"+i);
+            deletebutton.addActionListener(objeto);
+            mipanel.add(deletebutton); 
             panel.add(mipanel);
         }
+        
+        refreshView();
              
     }
 
@@ -156,7 +175,7 @@ public class GestionUsuario extends javax.swing.JFrame {
                     usuarios[i] = new Usuario(i,"User"+i,"13213131"+i,"03/10/2000"+i,"csrwer 34"+i,"erlewr@rer.com"+i);
                 }
                 GestionUsuario cons = new GestionUsuario();
-                cons.showRegisters(usuarios);
+                //cons.showRegisters(usuarios);
                 cons.setVisible(true);
             }
         });

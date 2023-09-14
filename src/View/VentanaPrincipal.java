@@ -30,8 +30,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public void setActionCommands(){
         this.buttonRegisterMon.setActionCommand("registermon");
         this.buttonRegisterIns.setActionCommand("registerins");
-        this.buttonConsultMon.setActionCommand("consultmon");
-        this.buttonConsultIns.setActionCommand("consultins");
+        this.buttonConsultMon.setActionCommand("gestionmon");
+        this.buttonConsultIns.setActionCommand("gestionins");
     }
     
     public void addListeners(ActionListener objeto){
