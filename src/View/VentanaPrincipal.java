@@ -163,10 +163,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonConsultIns;
-    private javax.swing.JButton buttonConsultMon;
-    private javax.swing.JButton buttonRegisterIns;
-    private javax.swing.JButton buttonRegisterMon;
+    public javax.swing.JButton buttonConsultIns;
+    public javax.swing.JButton buttonConsultMon;
+    public javax.swing.JButton buttonRegisterIns;
+    public javax.swing.JButton buttonRegisterMon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
