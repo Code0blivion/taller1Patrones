@@ -19,6 +19,7 @@ public class ConsultaIndividual extends javax.swing.JFrame {
      */
     public ConsultaIndividual() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public void initView() {

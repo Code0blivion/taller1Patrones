@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
     private String base ="basedatos";
     private String user ="root";
-    private String password ="0000";
+    private String password ="1234";
     private String url ="jdbc:mysql://localhost:3306/"+base;
     private Connection con = null;
     
@@ -26,7 +26,7 @@ public class Conexion {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = (Connection) DriverManager.getConnection(this.url, this.user, this.password);
-            JOptionPane.showMessageDialog(null, "conectado");
+            //JOptionPane.showMessageDialog(null, "conectado");
         }catch (SQLException e){
             System.err.println(e);
             JOptionPane.showMessageDialog(null, "error");

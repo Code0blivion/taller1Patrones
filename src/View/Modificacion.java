@@ -22,6 +22,7 @@ public class Modificacion extends javax.swing.JFrame {
      */
     public Modificacion() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public void initView() {

@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import Model.ConsultasMonitor;
 
 /**
  *
@@ -30,6 +31,7 @@ public class ControladorMonitor implements ActionListener {
     private Modificacion interfazModificacion = new Modificacion();
     private ConsultaIndividual interfazConsulta = new ConsultaIndividual();
     private ControladorPrincipal principal;
+    private ConsultasMonitor miconsulta = new ConsultasMonitor();
     private int pk;
 
     public ControladorMonitor(ControladorPrincipal principal) {
@@ -47,8 +49,8 @@ public class ControladorMonitor implements ActionListener {
         interfazModificacion.setActionsCommands();
         interfazModificacion.addListeners(this);
     }
-    
-    public void initConsulta(){
+
+    public void initConsulta() {
         interfazConsulta.initView();
         interfazConsulta.setActionsCommands();
         interfazConsulta.addListeners(this);
@@ -56,13 +58,7 @@ public class ControladorMonitor implements ActionListener {
 
     public void initGestion() {
         //Aqui se cargan los monitores desde la base de datos
-        //Codigo de prueba - Quitar cuando se conecte la base de datos
-        Monitor[] instructores = new Monitor[20];
-        for (int i = 0; i < instructores.length; i++) {
-            instructores[i] = new Monitor(i, "Monitor" + i, "13213131" + i, "03/10/2000" + i, "csrwer 34" + i, "erlewr@rer.com" + i);
-        }
-        //
-        interfazGestion.showRegisters(instructores, this);
+        interfazGestion.showRegisters(miconsulta.buscarTodos(), this);
         interfazGestion.setActionsCommands();
         interfazGestion.addListeners(this);
         interfazGestion.initView();
@@ -90,7 +86,9 @@ public class ControladorMonitor implements ActionListener {
                 Monitor monitor = new Monitor(1, nombre, phone, date, direccion, email);
 
                 System.out.println("Nombre: " + monitor.getNombre() + "Fecha: " + monitor.getFecha_nacimiento());
-                //Falta validar y guardar en base de datos...
+                //Falta validar...
+
+                miconsulta.registrar(monitor);
 
                 interfazRegistro.clearView();
                 // Mandar alerta de registro exitoso o fallido. 
@@ -106,16 +104,22 @@ public class ControladorMonitor implements ActionListener {
                 principal.initPrincipal();
                 interfazGestion.closeView();
                 break;
-            
-             case "returncons":
+
+            case "returncons":
                 interfazConsulta.closeView();
                 break;
-                
+
             case "update":
                 //Actualizar el registro en la base de datos
-                
-            break;
-                
+                Monitor nuevo = new Monitor(pk, interfazModificacion.getNameField().getText(),
+                        interfazModificacion.getPhoneField().getText(),
+                        DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.getDefault()).format(interfazRegistro.getDateField().getDate()),
+                        interfazModificacion.getAddressField().getText(), interfazModificacion.getEmailField().getText());
+                miconsulta.modificar(nuevo);
+                interfazModificacion.closeView();
+
+                break;
+
             default:
 
                 /*Para consultar individualmete, modificar o eliminar instructores se necesita la clave primaria 
@@ -125,46 +129,38 @@ public class ControladorMonitor implements ActionListener {
                 if (response.startsWith("modify")) {
                     pk = Integer.parseInt(response.replace("modify", ""));
                     //Aqui se carga el registro de la base de datos...
-                    //Linea de prueba - Quitar cuando se conecte la base de datos
-                    Monitor test = new Monitor(1, "Luis", "3215785454", "03/11/2000", "Cra 34 # 98-89", "luis@gmail.com");
+                    Monitor m = miconsulta.buscar(pk);
                     //
-                    interfazModificacion.getNameField().setText(test.getNombre());
-                    interfazModificacion.getAddressField().setText(test.getDireccion());
-                    interfazModificacion.getEmailField().setText(test.getCorreo());
-                    interfazModificacion.getPhoneField().setText(test.getTelefono());
+                    interfazModificacion.getNameField().setText(m.getNombre());
+                    interfazModificacion.getAddressField().setText(m.getDireccion());
+                    interfazModificacion.getEmailField().setText(m.getCorreo());
+                    interfazModificacion.getPhoneField().setText(m.getTelefono());
 
                     //Revisar el parse de fechas. No está convirtiendo correctamente el mes
                     try {
-                        interfazModificacion.getDateField().setDate(new SimpleDateFormat("dd/mm/yyyy").parse(test.getFecha_nacimiento()));
+                        interfazModificacion.getDateField().setDate(new SimpleDateFormat("dd/mm/yyyy").parse(m.getFecha_nacimiento()));
                     } catch (ParseException ex) {
                         Logger.getLogger(ControladorInstructor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     initModification();
+
                 } else if (response.startsWith("delete")) {
                     pk = Integer.parseInt(response.replace("delete", ""));
                     int confirm = JOptionPane.showConfirmDialog(interfazGestion, "Seguro que quiere eliminar este instructor?", "", JOptionPane.YES_NO_OPTION);
-                    if (confirm == 0) {
-                        //Se elimina el registro de la base de datos usando pk...
-                        //Codigo de prueba - Quitar cuando se conecte la base de datos
-                        Monitor[] monitores = new Monitor[2];
-                        for (int i = 0; i < monitores.length; i++) {
-                            monitores[i] = new Monitor(i, "User" + i, "13213131" + i, "03/10/2000" + i, "csrwer 34" + i, "erlewr@rer.com" + i);
-                        }
-                        //
-                        interfazGestion.showRegisters(monitores, this);
+                    if (confirm == 0) {  
+                        miconsulta.eliminar(pk);
+                        interfazGestion.showRegisters(miconsulta.buscarTodos(), this);
                     }
                 } else if (response.startsWith("consult")) {
                     pk = Integer.parseInt(response.replace("consult", ""));
                     //Cargar el registro de la base de datos con la pk
-                    //Linea de prueba
-                    Monitor test = new Monitor(1, "Luis", "3215785454", "03/11/2000", "Cra 34 # 98-89", "luis@gmail.com");
-                    //
-                    
-                    interfazConsulta.getNameLabel().setText(test.getNombre());
-                    interfazConsulta.getAddressLabel().setText(test.getDireccion());
-                    interfazConsulta.getPhoneLabel().setText(test.getTelefono());
-                    interfazConsulta.getMailLabel().setText(test.getCorreo());
-                    interfazConsulta.getDateLabel().setText(test.getFecha_nacimiento());
+                    Monitor m = miconsulta.buscar(pk);
+
+                    interfazConsulta.getNameLabel().setText(m.getNombre());
+                    interfazConsulta.getAddressLabel().setText(m.getDireccion());
+                    interfazConsulta.getPhoneLabel().setText(m.getTelefono());
+                    interfazConsulta.getMailLabel().setText(m.getCorreo());
+                    interfazConsulta.getDateLabel().setText(m.getFecha_nacimiento());
                     initConsulta();
                 }
 

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -39,7 +40,7 @@ public class ConsultasMonitor extends Conexion {
     public boolean modificar (Monitor m){
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "update monitor set nombreMonitor=?, telefonoMonitor=?, nacimientoMonitor=?, direccionMonitor=?,correoMonitor=? where id=?";
+        String sql = "update monitor set nombreMonitor=?, telefonoMonitor=?, nacimientoMonitor=?, direccionMonitor=?,correoMonitor=? where idMonitor=?";
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, m.getNombre());
@@ -57,13 +58,13 @@ public class ConsultasMonitor extends Conexion {
     } //------------ FIN MODIFICAR     
     
      // =========== METODO ELIMINAR
-    public boolean eliminar (Monitor m){
+    public boolean eliminar (int pk){
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "delete from monitor where id=?";
+        String sql = "delete from monitor where idMonitor=?";
         try{
             ps = con.prepareStatement(sql);
-            ps.setInt(1, m.getPk());
+            ps.setInt(1, pk);
             ps.execute();
             return true;
         }catch(SQLException e){
@@ -73,28 +74,53 @@ public class ConsultasMonitor extends Conexion {
     } //------------ FIN eliminar 
     
                     // =========== METODO BUSCAR
-    public boolean buscar (Monitor m){
+    public Monitor buscar (int pk){
         PreparedStatement ps = null;
         Connection con = getConexion();
         ResultSet rs = null;
-        String sql = "select * from monitor where id=?";
+        String sql = "select * from monitor where idMonitor=?";
         try{
             ps = con.prepareStatement(sql);
-            ps.setInt(1, m.getPk());
+            ps.setInt(1, pk);
             rs = ps.executeQuery();
             if(rs.next()){
-                m.setPk(Integer.parseInt(rs.getString("id")));
-                m.setNombre(rs.getString("nombreInstructor"));
-                m.setTelefono(rs.getString("telefonoInstructor"));
-                m.setFecha_nacimiento(rs.getString("nacimientoInstructor"));
-                m.setDireccion(rs.getString("direccionInstructor"));
-                m.setCorreo(rs.getString("correoInstructor"));
-                return true;
+                Monitor m = new Monitor(Integer.parseInt(rs.getString("idMonitor")),
+                rs.getString("nombreMonitor"),rs.getString("telefonoMonitor"),
+                rs.getString("nacimientoMonitor"),rs.getString("direccionMonitor"),
+                rs.getString("correoMonitor"));
+
+                return m;
             }
-            return false;
+
         }catch(SQLException e){
             System.err.println(e);
-            return false;
         }
+        return null;
+    } //------------ FIN BUSCAR 
+    
+                    // =========== METODO BUSCAR
+    public ArrayList<Usuario> buscarTodos (){
+        ArrayList<Usuario> monitores = new ArrayList<Usuario>();
+        PreparedStatement ps = null;
+        Connection con = getConexion();
+        ResultSet rs = null;
+        String sql = "select * from monitor";
+        try{
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Monitor m = new Monitor(Integer.parseInt(rs.getString("idMonitor")),
+                rs.getString("nombreMonitor"),rs.getString("telefonoMonitor"),
+                rs.getString("nacimientoMonitor"),rs.getString("direccionMonitor"),
+                rs.getString("correoMonitor"));
+                monitores.add((Usuario)m);
+            }
+            
+            return monitores;
+            
+        }catch(SQLException e){
+            System.err.println(e);
+        }
+        return null;
     } //------------ FIN BUSCAR 
 }

@@ -22,7 +22,7 @@ USE `BaseDatos` ;
 -- Table `BaseDatos`.`Monitor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `BaseDatos`.`Monitor` (
-  `idMonitor` INT NOT NULL,
+  `idMonitor` INT NOT NULL AUTO_INCREMENT,
   `telefonoMonitor` VARCHAR(13) NOT NULL,
   `nacimientoMonitor` VARCHAR(10) NOT NULL,
   `direccionMonitor` VARCHAR(20) NOT NULL,
@@ -36,23 +36,23 @@ ENGINE = InnoDB;
 -- Table `BaseDatos`.`Instructor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `BaseDatos`.`Instructor` (
-  `idInstructor` INT NOT NULL,
+  `idInstructor` INT NOT NULL AUTO_INCREMENT,
   `nombreInstructor` VARCHAR(50) NOT NULL,
   `telefonoInstructor` VARCHAR(13) NOT NULL,
   `nacimientoInstructor` VARCHAR(10) NOT NULL,
   `direccionInstructor` VARCHAR(20) NOT NULL,
   `correoInstructor` VARCHAR(50) NOT NULL,
-  `Monitor_idMonitor` INT NOT NULL,
-  PRIMARY KEY (`idInstructor`),
-  CONSTRAINT `fk_Instructor_Monitor`
-    FOREIGN KEY (`Monitor_idMonitor`)
-    REFERENCES `BaseDatos`.`Monitor` (`idMonitor`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  #`Monitor_idMonitor` INT NOT NULL,
+  PRIMARY KEY (`idInstructor`)#,
+  #CONSTRAINT `fk_Instructor_Monitor`
+    #FOREIGN KEY (`Monitor_idMonitor`)
+    #REFERENCES `BaseDatos`.`Monitor` (`idMonitor`)
+    #ON DELETE NO ACTION
+    #ON UPDATE NO ACTION
+    )
 ENGINE = InnoDB;
 
-CREATE INDEX `fk_Instructor_Monitor_idx` ON `BaseDatos`.`Instructor` (`Monitor_idMonitor` ASC) VISIBLE;
-
+#CREATE INDEX `fk_Instructor_Monitor_idx` ON `BaseDatos`.`Instructor` (`Monitor_idMonitor` ASC) VISIBLE;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

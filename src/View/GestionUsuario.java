@@ -7,6 +7,7 @@ package View;
 import Model.Usuario;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ public class GestionUsuario extends javax.swing.JFrame {
      */
     public GestionUsuario() {
         initComponents();
+        setLocationRelativeTo(null);
         panel = new JPanel();
         panel.setBackground(Color.blue);
         panel.setSize(600, 350);
@@ -56,27 +58,27 @@ public class GestionUsuario extends javax.swing.JFrame {
     }
     
     
-    public void showRegisters(Usuario[] usuarios, ActionListener objeto){
+    public void showRegisters(ArrayList<Usuario> usuarios, ActionListener objeto){
         panel.removeAll();
-        for(int i = 0; i<usuarios.length; i++){
+        for(int i = 0; i<usuarios.size(); i++){
             JPanel mipanel = new JPanel();
             mipanel.setBackground(Color.LIGHT_GRAY);
             mipanel.setSize(Short.MAX_VALUE, 50);
-            JLabel etiqueta = new JLabel(usuarios[i].getNombre());
+            JLabel etiqueta = new JLabel(usuarios.get(i).getNombre());
             mipanel.add(etiqueta);
             JButton consultbutton = new JButton();
             consultbutton.setText("Consultar Info");
-            consultbutton.setActionCommand("consult"+i);
+            consultbutton.setActionCommand("consult"+(usuarios.get(i).getPk()));
             consultbutton.addActionListener(objeto);
             mipanel.add(consultbutton);
             JButton modifybutton = new JButton();
             modifybutton.setText("Modificar Info");
-            modifybutton.setActionCommand("modify"+i);
+            modifybutton.setActionCommand("modify"+usuarios.get(i).getPk());
             modifybutton.addActionListener(objeto);
             mipanel.add(modifybutton);
             JButton deletebutton = new JButton();
             deletebutton.setText("ELIMINAR");
-            deletebutton.setActionCommand("delete"+i);
+            deletebutton.setActionCommand("delete"+usuarios.get(i).getPk());
             deletebutton.addActionListener(objeto);
             mipanel.add(deletebutton); 
             panel.add(mipanel);

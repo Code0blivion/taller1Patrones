@@ -5,13 +5,10 @@
 package Model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 
 /**
@@ -44,7 +41,7 @@ public class ConsultasInstructor extends Conexion {
     public boolean modificar (Instructor i){
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "update instructor set nombreInstructor=?, telefonoInstructor=?, nacimientoInstructor=?, direccionInstructor=?,correoInstructor=? where id=?";
+        String sql = "update instructor set nombreInstructor=?, telefonoInstructor=?, nacimientoInstructor=?, direccionInstructor=?,correoInstructor=? where idInstructor=?";
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, i.getNombre());
@@ -62,13 +59,13 @@ public class ConsultasInstructor extends Conexion {
     } //------------ FIN MODIFICAR     
     
      // =========== METODO ELIMINAR
-    public boolean eliminar (Instructor i){
+    public boolean eliminar (int pk){
         PreparedStatement ps = null;
         Connection con = getConexion();
-        String sql = "delete from instructor where id=?";
+        String sql = "delete from instructor where idInstructor=?";
         try{
             ps = con.prepareStatement(sql);
-            ps.setInt(1, i.getPk());
+            ps.setInt(1, pk);
             ps.execute();
             return true;
         }catch(SQLException e){
@@ -77,30 +74,53 @@ public class ConsultasInstructor extends Conexion {
         }
     } //------------ FIN eliminar 
     
-                    // =========== METODO BUSCAR
-    public boolean buscar (Instructor i){
+    // =========== METODO BUSCAR
+    public Instructor buscar (int pk){
         PreparedStatement ps = null;
         Connection con = getConexion();
         ResultSet rs = null;
-        String sql = "select * from instructor where id=?";
+        String sql = "select * from instructor where idInstructor=?";
         try{
             ps = con.prepareStatement(sql);
-            ps.setInt(1, i.getPk());
+            ps.setInt(1, pk);
             rs = ps.executeQuery();
             if(rs.next()){
-                i.setPk(Integer.parseInt(rs.getString("id")));
-                i.setNombre(rs.getString("nombreInstructor"));
-                i.setTelefono(rs.getString("telefonoInstructor"));
-                i.setFecha_nacimiento(rs.getString("nacimientoInstructor"));
-                i.setDireccion(rs.getString("direccionInstructor"));
-                i.setCorreo(rs.getString("correoInstructor"));
-                return true;
+                Instructor i = new Instructor(Integer.parseInt(rs.getString("idInstructor")),
+                rs.getString("nombreInstructor"),rs.getString("telefonoInstructor"),
+                rs.getString("nacimientoInstructor"),rs.getString("direccionInstructor"),
+                rs.getString("correoInstructor"));
+                return i;
             }
-            return false;
         }catch(SQLException e){
             System.err.println(e);
-            return false;
         }
-    } //------------ FIN BUSCAR 
+        return null;
+    } 
+    
+    // =========== METODO BUSCAR
+    public ArrayList<Usuario> buscarTodos (){
+        ArrayList<Usuario> instructores = new ArrayList<Usuario>();
+        PreparedStatement ps = null;
+        Connection con = getConexion();
+        ResultSet rs = null;
+        String sql = "select * from instructor";
+        try{
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Instructor i = new Instructor(Integer.parseInt(rs.getString("idInstructor")),
+                rs.getString("nombreInstructor"),rs.getString("telefonoInstructor"),
+                rs.getString("nacimientoInstructor"),rs.getString("direccionInstructor"),
+                rs.getString("correoInstructor"));
+                instructores.add((Usuario)i);
+            }
+            return instructores;
+            
+        }catch(SQLException e){
+            System.err.println(e);
+        }
+        return null;
+    } 
+//------------ FIN BUSCAR 
     
 }
